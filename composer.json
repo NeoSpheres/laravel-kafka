@@ -1,5 +1,5 @@
 {
-    "name": "mateusjunges/laravel-kafka",
+    "name": "neospheres/laravel-kafka",
     "description": "A kafka driver for laravel",
     "type": "library",
     "require": {
