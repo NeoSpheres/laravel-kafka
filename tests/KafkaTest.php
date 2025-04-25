@@ -39,7 +39,7 @@ final class KafkaTest extends LaravelKafkaTestCase
             ->andReturn($mockedProducerTopic)
             ->shouldReceive('poll')
             ->shouldReceive('flush')
-            ->andReturn(RD_KAFKA_RESP_ERR_NO_ERROR)
+            ->andReturn(\RD_KAFKA_RESP_ERR_NO_ERROR)
             ->getMock();
 
         $this->app->bind(Producer::class, fn () => $mockedProducer);
@@ -73,7 +73,7 @@ final class KafkaTest extends LaravelKafkaTestCase
             ->shouldReceive('newTopic')->with('test')->twice()->andReturn($mockedProducerTopic)
             ->shouldReceive('poll')->twice()
             ->shouldReceive('flush')->once()
-            ->andReturn(RD_KAFKA_RESP_ERR_NO_ERROR)
+            ->andReturn(\RD_KAFKA_RESP_ERR_NO_ERROR)
             ->getMock();
 
         $this->app->bind(Producer::class, fn () => $mockedProducer);
@@ -120,7 +120,7 @@ final class KafkaTest extends LaravelKafkaTestCase
             ->andReturn($mockedProducerTopic)
             ->shouldReceive('poll')
             ->shouldReceive('flush')
-            ->andReturn(RD_KAFKA_RESP_ERR_NO_ERROR)
+            ->andReturn(\RD_KAFKA_RESP_ERR_NO_ERROR)
             ->getMock();
 
         $this->app->bind(Producer::class, fn () => $mockedProducer);
@@ -184,7 +184,7 @@ final class KafkaTest extends LaravelKafkaTestCase
             ->andReturn($mockedProducerTopic)
             ->shouldReceive('poll')
             ->shouldReceive('flush')
-            ->andReturn(RD_KAFKA_RESP_ERR_NO_ERROR)
+            ->andReturn(\RD_KAFKA_RESP_ERR_NO_ERROR)
             ->getMock();
 
         $this->app->bind(Producer::class, function () use ($mockedProducer) {
@@ -236,7 +236,7 @@ final class KafkaTest extends LaravelKafkaTestCase
             ->andReturn($mockedProducerTopic)
             ->shouldReceive('poll')
             ->shouldReceive('flush')
-            ->andReturn(RD_KAFKA_RESP_ERR_NO_ERROR)
+            ->andReturn(\RD_KAFKA_RESP_ERR_NO_ERROR)
             ->getMock();
 
         $this->app->bind(Producer::class, function () use ($mockedProducer) {
@@ -318,7 +318,7 @@ final class KafkaTest extends LaravelKafkaTestCase
             ->andReturn($mockedProducerTopic)
             ->shouldReceive('poll')
             ->shouldReceive('flush')
-            ->andReturn(RD_KAFKA_RESP_ERR__FAIL)
+            ->andReturn(\RD_KAFKA_RESP_ERR__FAIL)
             ->times(10)
             ->getMock();
 
@@ -328,7 +328,7 @@ final class KafkaTest extends LaravelKafkaTestCase
 
         Event::assertDispatched(CouldNotPublishMessageEvent::class, function (CouldNotPublishMessageEvent $event) use ($expectedMessage) {
             return $event->throwable instanceof CouldNotPublishMessage
-                && $event->errorCode === RD_KAFKA_RESP_ERR__FAIL
+                && $event->errorCode === \RD_KAFKA_RESP_ERR__FAIL
                 && $event->message === $expectedMessage;
         });
     }
@@ -355,7 +355,7 @@ final class KafkaTest extends LaravelKafkaTestCase
             ->shouldReceive('poll')
             ->times($messageBatch->getMessages()->count())
             ->shouldReceive('flush')
-            ->andReturn(RD_KAFKA_RESP_ERR_NO_ERROR)
+            ->andReturn(\RD_KAFKA_RESP_ERR_NO_ERROR)
             ->once()
             ->getMock();
 

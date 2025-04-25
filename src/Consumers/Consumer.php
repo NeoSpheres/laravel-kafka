@@ -34,23 +34,23 @@ use Throwable;
 class Consumer implements MessageConsumer
 {
     private const IGNORABLE_CONSUMER_ERRORS = [
-        RD_KAFKA_RESP_ERR__PARTITION_EOF,
-        RD_KAFKA_RESP_ERR__TRANSPORT,
-        RD_KAFKA_RESP_ERR_REQUEST_TIMED_OUT,
-        RD_KAFKA_RESP_ERR__TIMED_OUT,
+        \RD_KAFKA_RESP_ERR__PARTITION_EOF,
+        \RD_KAFKA_RESP_ERR__TRANSPORT,
+        \RD_KAFKA_RESP_ERR_REQUEST_TIMED_OUT,
+        \RD_KAFKA_RESP_ERR__TIMED_OUT,
     ];
 
     private const CONSUME_STOP_EOF_ERRORS = [
-        RD_KAFKA_RESP_ERR__PARTITION_EOF,
-        RD_KAFKA_RESP_ERR__TIMED_OUT,
+        \RD_KAFKA_RESP_ERR__PARTITION_EOF,
+        \RD_KAFKA_RESP_ERR__TIMED_OUT,
     ];
 
     private const TIMEOUT_ERRORS = [
-        RD_KAFKA_RESP_ERR_REQUEST_TIMED_OUT,
+        \RD_KAFKA_RESP_ERR_REQUEST_TIMED_OUT,
     ];
 
     private const IGNORABLE_COMMIT_ERRORS = [
-        RD_KAFKA_RESP_ERR__NO_OFFSET,
+        \RD_KAFKA_RESP_ERR__NO_OFFSET,
     ];
 
     private readonly Logger $logger;
@@ -331,7 +331,7 @@ class Consumer implements MessageConsumer
         $topic = $this->producer->newTopic($this->config->getDlq());
 
         $topic->producev(
-            partition: RD_KAFKA_PARTITION_UA,
+            partition: \RD_KAFKA_PARTITION_UA,
             msgflags: 0,
             payload: $message->payload,
             key: $this->config->getConsumer()->producerKey($message),
@@ -370,7 +370,7 @@ class Consumer implements MessageConsumer
         try {
             $this->committer->commitMessage($message, $success);
         } catch (Throwable $throwable) {
-            if ($throwable->getCode() !== RD_KAFKA_RESP_ERR__NO_OFFSET) {
+            if ($throwable->getCode() !== \RD_KAFKA_RESP_ERR__NO_OFFSET) {
                 $this->logger->error($message, $throwable, 'MESSAGE_COMMIT');
 
                 throw $throwable;
@@ -407,7 +407,7 @@ class Consumer implements MessageConsumer
     {
         $batchConfig = $this->config->getBatchConfig();
 
-        if (RD_KAFKA_RESP_ERR_NO_ERROR === $message->err) {
+        if (\RD_KAFKA_RESP_ERR_NO_ERROR === $message->err) {
             $this->messageCounter->add();
 
             if ($batchConfig->isBatchingEnabled()) {

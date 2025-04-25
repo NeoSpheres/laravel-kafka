@@ -157,7 +157,7 @@ class Producer implements ProducerContract
     {
         $topic->producev(
             partition: $message->getPartition(),
-            msgflags: RD_KAFKA_MSG_F_BLOCK,
+            msgflags: \RD_KAFKA_MSG_F_BLOCK,
             payload: $message->getBody(),
             key: $message->getKey(),
             headers: $message->getHeaders()
@@ -170,7 +170,7 @@ class Producer implements ProducerContract
     {
         $topic->producev(
             partition: $message->getPartition(),
-            msgflags: RD_KAFKA_MSG_F_BLOCK,
+            msgflags: \RD_KAFKA_MSG_F_BLOCK,
             payload: $message->getBody(),
             key: $message->getKey(),
             headers: $message->getHeaders()
@@ -197,7 +197,7 @@ class Producer implements ProducerContract
                 return retry($retries, function () use ($timeout) {
                     $result = $this->producer->flush($timeout);
 
-                    if (RD_KAFKA_RESP_ERR_NO_ERROR === $result) {
+                    if (\RD_KAFKA_RESP_ERR_NO_ERROR === $result) {
                         return true;
                     }
 

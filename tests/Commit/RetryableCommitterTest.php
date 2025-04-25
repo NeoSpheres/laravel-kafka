@@ -13,7 +13,7 @@ final class RetryableCommitterTest extends LaravelKafkaTestCase
 {
     public function testItShouldRetryToCommit(): void
     {
-        $exception = new RdKafkaException("Something went wrong", RD_KAFKA_RESP_ERR_REQUEST_TIMED_OUT);
+        $exception = new RdKafkaException("Something went wrong", \RD_KAFKA_RESP_ERR_REQUEST_TIMED_OUT);
         $failingCommitter = new FailingCommitter($exception, 3);
         $retryableCommitter = new RetryableCommitter($failingCommitter, new FakeSleeper());
 
@@ -26,7 +26,7 @@ final class RetryableCommitterTest extends LaravelKafkaTestCase
 
     public function testItShouldRetryOnlyUpToTheMaximumNumberOfRetries(): void
     {
-        $expectedException = new RdKafkaException("Something went wrong", RD_KAFKA_RESP_ERR_REQUEST_TIMED_OUT);
+        $expectedException = new RdKafkaException("Something went wrong", \RD_KAFKA_RESP_ERR_REQUEST_TIMED_OUT);
         $failingCommitter = new FailingCommitter($expectedException, 99);
         $retryableCommitter = new RetryableCommitter($failingCommitter, new FakeSleeper(), 4);
 
@@ -56,7 +56,7 @@ final class RetryableCommitterTest extends LaravelKafkaTestCase
 
     public function testItShouldProgressivelyWaitForTheNextRetry(): void
     {
-        $expectedException = new RdKafkaException("Something went wrong", RD_KAFKA_RESP_ERR_REQUEST_TIMED_OUT);
+        $expectedException = new RdKafkaException("Something went wrong", \RD_KAFKA_RESP_ERR_REQUEST_TIMED_OUT);
 
         $sleeper = new FakeSleeper();
         $failingCommitter = new FailingCommitter($expectedException, 99);

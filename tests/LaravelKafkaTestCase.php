@@ -74,11 +74,11 @@ abstract class LaravelKafkaTestCase extends Orchestra
 
         $mockedKafkaProducer = m::mock(KafkaProducer::class)
             ->shouldReceive('flush')
-            ->andReturn(RD_KAFKA_RESP_ERR_NO_ERROR)
+            ->andReturn(\RD_KAFKA_RESP_ERR_NO_ERROR)
             ->shouldReceive('newTopic')
             ->andReturn($topic)
             ->shouldReceive('poll')
-            ->andReturn(RD_KAFKA_RESP_ERR_NO_ERROR)
+            ->andReturn(\RD_KAFKA_RESP_ERR_NO_ERROR)
             ->getMock();
 
         $this->app->bind(KafkaProducer::class, function () use ($mockedKafkaProducer) {
